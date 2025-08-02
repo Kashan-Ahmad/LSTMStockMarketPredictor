@@ -13,6 +13,17 @@ model = load_model('Stock Prediction Model.keras')
 st.title('📈 AI Stock Price Predictor')
 
 stock = st.text_input("Enter Stock Symbol (e.g. AAPL, GOOG)", 'GOOG')
+stock = stock.upper()
+
+try:
+    test_data = yf.download(stock, period="1d")
+    if test_data.empty:
+        st.warning("⚠️ Invalid stock symbol. Please enter a valid ticker (e.g. AAPL, GOOG, MSFT).")
+        st.stop()  # Prevents the rest of the code from running
+except Exception as e:
+    st.error("❌ Error fetching stock data. Please check your internet connection or try a different symbol.")
+    st.stop()
+
 from datetime import datetime, timedelta
 
 # Get last 10 years of data from today
