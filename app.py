@@ -9,11 +9,28 @@ from sklearn.preprocessing import MinMaxScaler
 #model = load_model('C:\Users\kasub\OneDrive\Desktop\SimpleStockMarketPredictor\Stock Prediction Model.keras')
 model = load_model('Stock Prediction Model.keras')
 
-
+from yahooquery import search
 st.title('📈 AI Stock Price Predictor')
 
-stock = st.text_input("Enter Stock Symbol (e.g. AAPL, GOOG)", 'GOOG')
-stock = stock.upper()
+#stock = st.text_input("🔎Enter Stock Symbol (e.g. AAPL, GOOG)", 'GOOG')
+#stock = stock.upper()
+
+query = st.text_input("🔎Enter Stock Symbol (e.g. AAPL, GOOG)", "GOOG")
+
+if query:
+    results = search(query)
+    matches = results.get("quotes", [])
+    options = [f"{m['symbol']} - {m.get('shortname', '')}" for m in matches if m.get('quoteType') == 'EQUITY']
+
+    if options:
+        selected = st.selectbox("Select from results:", options)
+        stock = selected.split(" - ")[0]
+    else:
+        st.warning("No matching stock found. Try a different search.")
+        st.stop()
+else:
+    st.stop()  # No input yet
+
 
 try:
     test_data = yf.download(stock, period="1d")
