@@ -5,7 +5,6 @@ from keras.models import load_model
 import streamlit as st
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import MinMaxScaler
-import plotly.graph_objs as go
 
 #model = load_model('C:\Users\kasub\OneDrive\Desktop\SimpleStockMarketPredictor\Stock Prediction Model.keras')
 model = load_model(r'C:\Users\kasub\OneDrive\Desktop\SimpleStockMarketPredictor\Stock Prediction Model.keras')
