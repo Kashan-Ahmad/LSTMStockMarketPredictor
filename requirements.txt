@@ -7,3 +7,4 @@ altair
 keras
 tensorflow
 matplotlib
+yahooquery
